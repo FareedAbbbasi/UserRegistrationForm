@@ -1,12 +1,21 @@
 import React from "react";
 import { Button, Checkbox, Label, TextInput, Textarea } from "flowbite-react";
 import { EnquiryList } from "./enquiryList.jsx/EnquiryList";
+import axios from "axios";
 
 
 export default function Enquiry() {
   let saveEnquiry = (e) => {
-    alert("Enquiry Saved");
     e.preventDefault();
+    let formData={
+      name: e.target.name.value,
+      email: e.target.email.value,
+      phone: e.target.phone.value,
+      message: e.target.message.value
+    }
+    axios.post('http://localhost:8020/api/website/enquiry/insert', formData).then((res)=> {
+      console.log(res.data)
+    })
   };
   return (
     <div className="px-10">
@@ -63,7 +72,6 @@ export default function Enquiry() {
         </div>
         {/* table section */}
         <EnquiryList />
-       
       </div>
     </div>
   );
