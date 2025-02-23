@@ -10,7 +10,7 @@ export const EnquiryList = () => {
         <Table.Head>
           <Table.HeadCell>Sr No</Table.HeadCell>
           <Table.HeadCell>Name</Table.HeadCell>
-          <Table.HeadCell>email</Table.HeadCell>
+          <Table.HeadCell>Email</Table.HeadCell>
           <Table.HeadCell>Phone</Table.HeadCell>
           <Table.HeadCell>Message</Table.HeadCell>
           <Table.HeadCell>
@@ -23,12 +23,12 @@ export const EnquiryList = () => {
         <Table.Body className="divide-y">
           <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
             <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-              {'1'}
+              {'01'}
             </Table.Cell>
             <Table.Cell>Abbas</Table.Cell>
             <Table.Cell>abc@gmail.com</Table.Cell>
-            <Table.Cell>035555555</Table.Cell>
-            <Table.Cell>hello</Table.Cell>
+            <Table.Cell>035555555555</Table.Cell>
+            <Table.Cell>Hey</Table.Cell>
             <Table.Cell>
               <a
                 href="#"
