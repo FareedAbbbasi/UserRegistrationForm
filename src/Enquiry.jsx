@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Checkbox, Label, TextInput, Textarea } from "flowbite-react";
 import { EnquiryList } from "./enquiryList.jsx/EnquiryList";
 import { ToastContainer, toast } from 'react-toastify';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 import axios from "axios";
 
 export default function Enquiry() {
+  let [enquiryList, setEnquiryList] = useState([])
   let [userformdata, setFormData] = useState({
     name: "",
     email: "",
@@ -15,7 +17,7 @@ export default function Enquiry() {
   let saveEnquiry = (e) => {
     e.preventDefault();
     // let formData={
-    //   name: e.target.name.value,
+    //   name: e.target.name.value, 
     //   email: e.target.email.value,
     //   phone: e.target.phone.value,
     //   message: e.target.message.value
@@ -25,6 +27,7 @@ export default function Enquiry() {
       .post("http://localhost:8020/api/website/enquiry/insert", userformdata)
       .then((res) => {
         console.log(res.data);
+        getAllEnquires();
         toast.success("Enquiry Saved Successfully")
         setFormData({
           name: "",
@@ -38,6 +41,18 @@ export default function Enquiry() {
       });
   };
 
+  let getAllEnquires = () => {
+    axios.get('http://localhost:8020/api/website/enquiry/view')
+    .then((res) => {
+      return res.data
+    })
+    .then((finalData) => {
+      if(finalData.status) {
+        setEnquiryList(finalData.enquiryList)
+      }
+    })
+  }
+
   let getValue = (e) => {
     let inputName = e.target.name; // name
     let inputValue = e.target.value; // p
@@ -46,6 +61,10 @@ export default function Enquiry() {
     oldData[inputName] = inputValue;
     setFormData(oldData);
   };
+
+useEffect(()=> {
+  getAllEnquires();
+}, [])
 
   return (
     <div className="px-10">
@@ -110,7 +129,7 @@ export default function Enquiry() {
           </form>
         </div>
         {/* table section */}
-        <EnquiryList />
+        <EnquiryList data={enquiryList} getAllEnquires={getAllEnquires} Swal={Swal} setFormData={setFormData}/>
       </div>
     </div>
   );
