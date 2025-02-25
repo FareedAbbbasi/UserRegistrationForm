@@ -12,18 +12,28 @@ export default function Enquiry() {
     email: "",
     phone: "",
     message: "",
+    _id: ""
   });
 
   let saveEnquiry = (e) => {
     e.preventDefault();
-    // let formData={
-    //   name: e.target.name.value, 
-    //   email: e.target.email.value,
-    //   phone: e.target.phone.value,
-    //   message: e.target.message.value
-    // }
 
-    axios
+    if (userformdata._id) {
+      // update
+      axios.put(`http://localhost:8020/api/website/enquiry/update/${userformdata._id}`, userformdata)
+      .then((res)=> {
+        toast.success('Enquiry Updated Successfully')
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          message: ''
+        })
+        getAllEnquires()
+      })
+    }
+    else {
+      axios
       .post("http://localhost:8020/api/website/enquiry/insert", userformdata)
       .then((res) => {
         console.log(res.data);
@@ -34,11 +44,15 @@ export default function Enquiry() {
           email: "",
           phone: "",
           message: "",
+          _id: ""
         });
       })
       .catch((error) => {
         console.error("Error:", error);
       });
+
+    }
+    
   };
 
   let getAllEnquires = () => {
@@ -123,7 +137,7 @@ useEffect(()=> {
             </div>
             <div className="py-3">
               <Button className="w-[100%]" type="submit">
-                Saved
+                  {userformdata._id ? 'Update' : 'Save'}
               </Button>
             </div>
           </form>
